@@ -1,0 +1,205 @@
+﻿@model HR_SYSTEM_V1.Models.Employee
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+       <section id="horizontal-form-layouts">
+
+        <div class="row">
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                        <h4 class="card-title" id="horz-layout-basic">Add Employee Information</h4>
+                        </div>
+                        <p class="mb-0">This is the basic horizontal form with labels on left and cost estimation form
+                            is the default position.</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div asp-validation-summary=All class="text-danger"></div>
+                            <form class="form form-horizontal" asp-action="Add" asp-controller="Employee" method="post" enctype="multipart/form-data">
+                               
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-user"></i> Personal Details</h4>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="Name"> Name: </label>
+                                        <div class="col-md-9">
+                                            <input type="text" asp-for="Name" class="form-control">
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="Address">Address: </label>
+                                        <div class="col-md-9">
+                                            <input type="text" asp-for="Address" class="form-control">
+                                            <span asp-validation-for="Address" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="Email">E-mail: </label>
+                                        <div class="col-md-9">
+                                            <input type="text" asp-for="Email" class="form-control" >
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="Phone">Contact Number:
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" asp-for="Phone" class="form-control">
+                                            <span asp-validation-for="Phone" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="form-section"><i class="icon-book-open"></i>Other Details</h4>
+                                    
+                                    
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="Birth_Date" >Birth Date: </label>
+                                        <div class="col-md-9">
+                                            <div class="position-relative has-icon-left">
+                                                <input type="date" asp-for="Birth_Date"  class="form-control">
+                                                <div class="form-control-position">
+                                                    <i class="ft-message-square"></i>
+                                                </div>
+                                            </div>
+                                        <span asp-validation-for="Birth_Date" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" >gender: </label>
+                                        <div class="col-md-9">
+                                            <select asp-for="Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()"></select>
+                                            <span asp-validation-for="Gender" class="text-danger"></span>                          
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="Hire_Date" >Hire Date: </label>
+                                        <div class="col-md-9">
+                                            <div class="position-relative has-icon-left">
+                                                <input type="date" asp-for="Hire_Date"  class="form-control">
+                                                <div class="form-control-position">
+                                                    <i class="ft-message-square"></i>
+                                                </div>
+                                            </div>
+                                        <span asp-validation-for="Hire_Date" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class=" row form-group">
+                                                <label class="col-md-3 label-control" asp-for="StartTime">Start time: </label>
+                                                <div class="position-relative has-icon-left col-lg-9">
+                                                    <input type="time"asp-for="StartTime" class="form-control">
+                                                    <div class="form-control-position">
+                                                        <i class="ft-clock"></i>
+                                                    </div>
+                                                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12">
+                                            <div class=" row form-group">
+                                                <label class="col-md-3 label-control">End time: </label>
+                                                <div class="position-relative has-icon-left col-lg-9">
+                                                    <input type="time" id="timesheetinput6" class="form-control"
+                                                        asp-for="EndTime">
+                                                    <div class="form-control-position">
+                                                        <i class="ft-clock"></i>
+                                                    </div>
+                                                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" for="projectinput7">Salary: </label>
+                                        <div class="col-md-9">
+                                            <input type="text" asp-for="Salary" class="form-control">
+                                            <span asp-validation-for="Salary" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="national_Id">National ID: </label>
+                                        <div class="col-md-9">
+                                            <input type="text" asp-for="national_Id" class="form-control">
+                                            <span asp-validation-for="national_Id" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="Nationalty">Nationality: </label>
+                                        <div class="col-md-9">
+                                            <input type="text" asp-for="Nationalty" class="form-control"> 
+                                            <span asp-validation-for="Nationalty" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control">Select File: </label>
+                                        <div class="col-md-9">
+                                            <label id="projectinput8" class="file center-block">
+                                                <input type="file" asp-for="Emp_Image">
+                                                <span class="file-custom"></span>
+                                                : </label>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 label-control" asp-for="Note">Notes: </label>
+                                        <div class="col-md-9">
+                                            <textarea asp-for="Note" rows="5" class="form-control"></textarea>
+                                            <span asp-validation-for="Note" class="text-danger"></span>
+                                        </div>
+                                    </div>   
+                                </div>
+
+                                <div class="form-actions">
+                                    <a asp-action="Add"  class="btn btn-danger mr-1"><i class="icon-trash"></i> Cancel</a>
+                                    <button type="submit" class="btn btn-success"><i class="icon-note"></i> Save </button>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section> 
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

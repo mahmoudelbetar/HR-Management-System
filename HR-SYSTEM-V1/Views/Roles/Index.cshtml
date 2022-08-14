@@ -1,0 +1,52 @@
+﻿
+@model IEnumerable<IdentityRole>
+@using HR_SYSTEM_V1.Constants;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title-wrap bar-success">
+            <h4 class="card-title pb-2" id="horz-layout-basic">Add Roles</h4>
+        </div>
+@if (AuthorizationService.AuthorizeAsync(User, Permissions.AddNewGroup.Create).Result.Succeeded)
+{
+}
+    <partial name="_RoleForm" model="new RoleFormViewModel()" />
+    </div>
+</div>
+@if (AuthorizationService.AuthorizeAsync(User, Permissions.AddNewGroup.View).Result.Succeeded)
+{ }
+<table class="table table-striped mt-2 text-center bg-white">
+        <thead>
+            <tr class="bg-primary text-white">
+                <th class="w-50">Role Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td><b>@role.Name </b></td>
+                    <td>
+                        @if (AuthorizationService.AuthorizeAsync(User, Permissions.Premissions.View).Result.Succeeded)
+                        {
+                        }
+                            <a class="btn btn-primary" asp-action="ManagePermissions" asp-route-roleId="@role.Id">Manage Permissions</a>
+                        
+                        @if (AuthorizationService.AuthorizeAsync(User, Permissions.AddNewGroup.Delete).Result.Succeeded)
+                        {
+                        }
+                            <a class="btn btn-danger" asp-action="Delete" asp-controller="Roles" asp-route-roleId="@role.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,84 @@
+﻿<div data-active-color="white" data-background-color="black" data-image="~/img/sidebar-bg/01.jpg" class="app-sidebar">
+    <div class="sidebar-header">
+        <div class="logo clearfix"><a asp-action="Index" asp-controller="Home" class="logo-text float-left">
+                <div class="logo-img"><img src="~/img/logo.png" alt="Convex Logo" /></div><span
+                    class="text align-middle">Hr System</span>
+            </a>
+            <a id="sidebarToggle" href="javascript:;" class="nav-toggle d-none d-sm-none d-md-none d-lg-block"></a><a
+                id="sidebarClose" href="javascript:;" class="nav-close d-block d-md-block d-lg-none d-xl-none">
+            </a>
+        </div>
+    </div>
+    <div class="sidebar-content">
+        <div class="nav-container">
+            <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
+                <li class="nav-item home">
+                    <a asp-action="Index" asp-controller="Home"><i class="icon-home"></i><span data-i18n="" class="menu-title">Dashboard</span></a>
+                </li>
+                @if (AuthorizationService.AuthorizeAsync(User, Permissions.Employee.View).Result.Succeeded)
+                {
+                    <li class="has-sub nav-item">
+                        <a href="#"><i class="icon-users"></i><span data-i18n="" class="menu-title"> Employees</span></a>
+                        <ul class="menu-content">
+                            <li><a asp-action = "Index" asp-controller="Employee" class="menu-item"> <i class="icon-bar"></i> Employees
+                                    Statistics</a>
+                            </li>
+                         
+                         @if (AuthorizationService.AuthorizeAsync(User, Permissions.Employee.Create).Result.Succeeded){
+
+                            <li><a asp-action="Add" asp-controller="Employee" class="menu-item">Add Employee</a>
+                            </li>
+                         }
+                        </ul>
+                    </li>
+                }
+                @if (AuthorizationService.AuthorizeAsync(User, Permissions.Employee.Create).Result.Succeeded){
+                <li class=" nav-item"><a asp-action="Add" asp-controller="Employee"><i class="icon-note"></i><span data-i18n=""
+                            class="menu-title">Add Employee</span></a>
+                </li>
+                }
+                
+                @if (AuthorizationService.AuthorizeAsync(User, Permissions.GenralSettings.View).Result.Succeeded)
+                {
+                    <li class=" nav-item"><a asp-controller="GeneralSetting" asp-action="Index"><i class="icon-pie-chart"></i><span data-i18n=""
+                            class="menu-title">
+                                General Settings</span></a>
+                    </li>
+                }
+                @if (AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.View).Result.Succeeded)
+                {
+                    <li class=" nav-item"><a asp-action="Index" asp-controller="Attendanc"><i class="icon-support"></i><span
+                            data-i18n="" class="menu-title">
+                                Attendance</span></a>
+                    </li>
+                }
+                @if (AuthorizationService.AuthorizeAsync(User, Permissions.Salaryreport.View).Result.Succeeded)
+                {
+                    <li class=" nav-item"><a asp-controller="SalaryReport" asp-action="Index"><i class="icon-layers"></i><span data-i18n=""
+                            class="menu-title">Salary report</span></a>
+                    </li>
+                }
+                @if (AuthorizationService.AuthorizeAsync(User, Permissions.Users.View).Result.Succeeded)
+                {
+                    <li class=" nav-item"><a asp-action="Index" asp-controller="Users"><i class="icon-users"></i><span data-i18n=""
+                            class="menu-title">Users</span></a>
+                    </li>
+                }
+                @if (AuthorizationService.AuthorizeAsync(User, Permissions.Premissions.View).Result.Succeeded)
+                {
+                    <li class=" nav-item"><a asp-action="Index" asp-controller="Roles"><i class="icon-equalizer"></i><span data-i18n=""
+                            class="menu-title">Permissions</span></a>
+                    </li>
+                }
+
+                <li class=" nav-item"><a>  
+                    <form  class="form-inline p-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="nav-link btn btn-link text-white p-0 mb-0"> <i class="ft-power mr-2"></i>Logout</button>
+                    </form>
+                          </a>
+                </li </ul>
+        </div>
+    </div>
+    <div class="sidebar-background">
+    </div>
+</div>

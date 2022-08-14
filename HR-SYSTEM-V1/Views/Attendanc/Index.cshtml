@@ -1,0 +1,109 @@
+﻿
+@model List<Attendance>
+
+@{
+    ViewData["Title"] = "Index";
+
+    //SelectList employee = new SelectList(ViewBag.employees, "Emp_Id", "Name");
+    Attendance attendance = new Attendance();
+    if (ViewBag.flag == 0)
+    {
+        attendance = ViewBag.Attend;
+    }
+}
+
+
+<link href="~/lib/datatables/css/dataTables.bootstrap4.css" />
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title-wrap bar-success">
+            <h4 class="card-title" id="horz-layout-basic">Employee Attendance</h4>
+        </div>
+        <p class="mb-0">
+            This is the basic horizontal form with labels on left and cost estimation form
+            is the default position.
+        </p>
+    </div>
+</div>
+<div class="container bg-white pt-4">
+
+    <table id="employees" class="table table-striped table-bordered dt-responsive nowrap text-center" style="color: black; margin-top: 15px">
+        <thead>
+            <tr class="bg-primary text-white">
+                <th>Name</th>
+                <th>Date</th>
+                <th>Attendance Date</th>
+                <th>Check out date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.employee.Name</td>
+                    <td>@item.Day_Date.ToString("yyyy-MM-dd")</td>
+                    <td>@item.StartTimeWork</td>
+                    <td>@item.EndTimeWork</td>
+                    <td>
+                        @if (AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.Edit).Result.Succeeded) {
+                            <a class="btn btn-primary"  asp-action="Edit" asp-controller="Attendanc" asp-route-id="@item.Attend_Id">Edit</a>
+                        }
+                        @if (AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.Delete).Result.Succeeded) {
+                            <a class="btn btn-danger" onclick="showalert(@item.Attend_Id)"   asp-action="Delete" asp-controller="Attendanc" asp-route-id="@item.Attend_Id">Delete</a>
+                        }                   
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    @if (AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.Create).Result.Succeeded || AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.Edit).Result.Succeeded)
+    {
+    <partial class="pt-4" name="newAttendance" model="@attendance"  />
+    }
+
+
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            $("#employees").dataTable()
+        })
+
+
+        function showalert(id){
+            var a = $(this);
+            console.log(a);
+            event.preventDefault();
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor:'#d33',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  $.ajax({url: "/Attendanc/Delete/"+id,
+                      success: function() {
+                          location.reload();
+                        }});
+   
+  }
+})
+        }
+
+
+    </script>
+    
+
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
+  
+}

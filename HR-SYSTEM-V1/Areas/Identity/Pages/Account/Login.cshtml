@@ -1,0 +1,51 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";   
+        Layout = "_LoginCustom";
+
+}
+
+
+
+            <form id="account" method="post">
+                <div class="inputBx">
+                    <input asp-for="Input.Email"  autocomplete="username" aria-required="true" />
+                    <span>Login</span>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="inputBx password">
+                    <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" id="password-input" />
+                    <span>Password</span>
+                    <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                        <label asp-for="Input.RememberMe" class="form-label text-white">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+
+                <div class="inputBx">
+                    <input id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary" value="Log in"></input>
+                </div>
+            </form>
+        
+
+@section Scripts {
+     <script>
+          function show_hide_password(target){
+  var input = document.getElementById('password-input');
+  if (input.getAttribute('type') == 'password') {
+    target.classList.add('view');
+    input.setAttribute('type', 'text');
+  } else {
+    target.classList.remove('view');
+    input.setAttribute('type', 'password');
+  }
+  return false;
+}
+      </script>
+    <partial name="_ValidationScriptsPartial" />
+}

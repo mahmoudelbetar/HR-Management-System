@@ -1,0 +1,3 @@
+national unique;
+if holiday ==> absent == false
+absent day == dailySalary Or general setting

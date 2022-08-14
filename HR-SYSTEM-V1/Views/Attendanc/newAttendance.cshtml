@@ -1,0 +1,139 @@
+﻿@model HR_SYSTEM_V1.Models.Attendance
+
+@{
+    ViewData["Title"] = "newAttendance";
+    SelectList employee = new SelectList(ViewBag.employees, "Emp_Id", "Name");
+
+}
+
+<div class="card mt-4">
+    <div class="card-header">
+        <div class="card-title-wrap bar-success">
+            <h4 class="card-title" id="horz-layout-basic">Add Attendance</h4>
+        </div>
+  
+    </div>
+</div>
+<div class="card-body">
+<div asp-validation-summary="All" class="text-danger"></div>
+    <div class="px-3">
+
+        @{
+            string btn = "";
+        }
+
+        @if (@Model.StartTimeWork != null)
+        {
+            <form class="form form-horizontal" id="attendaceForm" asp-controller="Attendanc" asp-action="Edit"
+              asp-route-id="@Model.Attend_Id">
+            </form>
+            btn = "Update";
+        }
+        else
+        {
+            <form class="form form-horizontal" id="attendaceForm" asp-controller="Attendanc" asp-action="newAttendance">
+            </form>
+            btn = "Save";
+        }
+
+
+        <div class="form-body">
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput7">Employee Name : </label>
+                <div class="col-md-9">
+                    <select form="attendaceForm" asp-for="Emp_Id" asp-items="employee" class="form-control">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput9">Date: </label>
+                <div class="col-md-9">
+                    <div class="position-relative has-icon-left">
+                            <input type="date" id="timesheetinput3" form="attendaceForm" asp-for="Day_Date"
+                                   class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" row">
+            <div class="col-md-12">
+                <div class=" row form-group">
+                    <label class="col-md-3 label-control">Start time: </label>
+                    <div class="position-relative has-icon-left col-lg-9">
+                        <input type="time" id="timesheetinput5" form="attendaceForm" asp-for="StartTimeWork" class="form-control">
+                    </div>
+                    <span asp-validation-for="StartTimeWork" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class=" row form-group">
+                    <label class="col-md-3 label-control">End time: </label>
+                    <div class="position-relative has-icon-left col-lg-9">
+                        <input type="time" form="attendaceForm" asp-for="EndTimeWork" class="form-control">
+                    </div>
+                    <span asp-validation-for="EndTimeWork" class="text-danger"></span>
+                </div>
+            </div>
+
+        </div>
+
+        @{
+            bool day = false;
+
+
+                @foreach (var item in @ViewBag.holidays)
+            {
+                if (@Model.Day_Date.DayOfWeek.ToString() == item)
+                {
+                    day = true;
+                    break;
+                }
+            }
+                @if (day != true)
+            {
+                    <div class="form-actions">
+                        <button type="reset" form="attendaceForm" class="btn btn-danger mr-1 ">
+                            <a asp-action="Index" asp-controller="Attendanc">
+                             <i class="icon-trash"></i> Cancel </a>
+                        </button>
+                        @if (btn == "Save")
+                    {
+                        @if (AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.Create).Result.Succeeded)
+                        {
+                            <button type="submit" form="attendaceForm" class="btn btn-success" id="SaveBtn">
+                                <i class="icon-note"></i> Save
+                            </button>
+                        }
+                    }
+                    else
+                    {
+                        @if (AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.Edit).Result.Succeeded){
+
+                            <button type="submit" form="attendaceForm" class="btn btn-success" id="SaveBtn">
+                                <i class="icon-note"></i> Update
+                            </button>
+                        }
+                    }
+
+                    </div>
+            }
+            else
+            {
+                    <h3 class="text-danger">Today is Weekly Holiday</h3>
+                    <div class="form-actions">
+                        @if (AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.Create).Result.Succeeded){
+                        <button type="submit" form="attendaceForm" class="btn btn-danger mr-1 " disabled>
+                            <i class="icon-trash"></i> Cancel
+                        </button>
+                        <button type="submit" form="attendaceForm" class="btn btn-success" id="SaveBtn" disabled>
+                            <i class="icon-note"></i> Save
+                        </button>
+                        }
+                    </div>
+            }
+        }
+    </div>
+</div>

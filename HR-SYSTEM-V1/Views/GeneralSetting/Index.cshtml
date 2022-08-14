@@ -1,0 +1,103 @@
+﻿@model GeneralSettingViewModel
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+
+
+<section id="horizontal-form-layouts">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="card-title-wrap bar-success">
+						<h4 class="card-title" id="horz-layout-basic">General Settings Form </h4>
+					</div>
+					<p class="mb-0">This is the basic horizontal form with labels on left and cost estimation form is the default position.</p>
+				</div>
+				<div class="card-body">
+					<div class="px-3">
+						<div asp-validation-summary=All class="text-danger"></div>
+						<form class="form form-horizontal" asp-controller="GeneralSetting" asp-action="addGeneralSetting">
+							
+							<div class="form-body">
+								<h4 class="form-section">
+									<i class="icon-user"></i>General information</h4>
+								<div class="form-group row">
+									<label class="col-md-3 label-control" asp-for="ExtraDiscountType">Type: </label>
+									<div class="col-md-9">
+										<select id="ExtraDiscountType" class="form-control" asp-for="ExtraDiscountType" asp-items="Html.GetEnumSelectList<ExtraDiscountType>()"></select>
+									    <span class="text-danger" asp-validation-for="ExtraDiscountType" ></span>
+                                    </div>
+								</div>
+								<div class="form-group row">
+									<label class="col-md-3 label-control" asp-for="Extra">The extra: </label>
+									<div class="col-md-9">
+										<input id="projectinput1" class="form-control" asp-for="Extra">
+                                        <span class="text-danger" asp-validation-for="Extra" ></span>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label class="col-md-3 label-control" asp-for="Discount">Discount: </label>
+									<div class="col-md-9">
+										<input id="projectinput2" class="form-control" asp-for="Discount">
+									    <span class="text-danger" asp-validation-for="Discount" ></span>
+                                    </div>
+								</div>
+
+
+								<div class="form-group row">
+									<label class="col-md-3 label-control" for="projectinput7">Weekly Holidays: </label>
+									<div class="col-md-9">
+
+                                            <input type="checkbox" id="Tue" asp-for="Friday" >
+                                            <label asp-for="Friday">Friday</label><br>
+
+                                            <input type="checkbox" id="vehicle1" asp-for="Saturday" >
+                                            <label asp-for="Saturday"> Satrday</label><br>
+
+                                            <input type="checkbox" id="vehicle2" asp-for="Sunday" >
+                                            <label asp-for="Sunday"> Sunday</label><br>
+
+                                            <input type="checkbox" id="vehicle3" asp-for="Monday">
+                                            <label asp-for="Monday"> Monday</label><br>
+
+                                            <input type="checkbox" id="vehicle2" asp-for="Tuesday">
+                                            <label asp-for="Tuesday"> Tuesday</label><br>
+
+                                            <input type="checkbox" id="Tue" asp-for="Wednesday" >
+                                            <label asp-for="Wednesday"> Wednesday</label><br>
+
+                                            <input type="checkbox" id="Tue" asp-for="Thursday" >
+                                            <label asp-for="Thursday">Thursday</label><br>
+                                                         
+									</div>
+								</div>
+
+		
+								<div class="form-actions">
+									<button type="button" class="btn btn-danger mr-1">
+										<i class="icon-trash"></i> Cancel
+									</button>
+									@if (AuthorizationService.AuthorizeAsync(User, Permissions.GenralSettings.Create).Result.Succeeded || AuthorizationService.AuthorizeAsync(User, Permissions.GenralSettings.Edit).Result.Succeeded)
+									{
+									<button type="submit" class="btn btn-success">
+										<i class="icon-note"></i> Save
+									</button>
+									}
+								</div>
+
+							</div>
+
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</section>
+
+

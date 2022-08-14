@@ -1,0 +1,53 @@
+﻿@model IEnumerable<UserViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title-wrap bar-success">
+            <h4 class="card-title" id="horz-layout-basic">User Information</h4>
+        </div>
+        <p class="mb-0">
+            This is the basic horizontal form with labels on left and cost estimation form
+            is the default position.
+        </p>
+    </div>
+</div>
+<div class="conatiner bg-white pt-3 px-3">
+<div class="w-100">
+
+    <div class="float-right w-25">
+    <a class="btn btn-primary w-100" asp-action="NewUser" asp-controller="Users"> Add User</a>
+    </div>
+
+<table class="table table-striped text-center" id="userTable">
+    <thead>
+        <tr class="bg-primary text-white">
+            <th>User</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@string.Join(" , ", user.Roles.ToList())</td>
+                <td>
+                @if (AuthorizationService.AuthorizeAsync(User, Permissions.Employee.Edit).Result.Succeeded)
+                {
+                        <a class="btn btn-primary" asp-action="ManageRoles" asp-controller="Users" asp-route-userId="@user.Id">Edit</a>
+                    }
+                    @if (AuthorizationService.AuthorizeAsync(User, Permissions.Employee.Delete).Result.Succeeded)
+                    {
+                        <a class="btn btn-danger" asp-action="Delete" asp-controller="Users" asp-route-userId="@user.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
